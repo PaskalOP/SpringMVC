@@ -11,8 +11,12 @@
     <div style="margin:20px" th:each="note : ${listNotes}">
         <h2 th:text= "${note.title}"></h2>
         <p th:text="${note.content}"></p>
-        <a th:href="@{'edit/' + ${note.id}}" class="btn btn-success" role="button">EDIT</a>
-        <a th:href="@{'delete/' + ${note.id}+ '?redirect=/list'}" class="btn btn-danger" role="button">DELETE</a>
+
+        <form th:action="@{/note/delete}" method="post">
+            <a th:href="@{'edit/' + ${note.id}}" class="btn btn-success" role="button">EDIT</a>
+            <input type="hidden" name="id" th:value="${note.id}">
+            <button type="submit" class="btn btn-danger">DELETE</button>
+        </form>
 
     </div>
 

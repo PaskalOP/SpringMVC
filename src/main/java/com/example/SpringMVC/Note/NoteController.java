@@ -17,10 +17,10 @@ public class NoteController {
         return result;
 
     }
-    @GetMapping ("/delete/{id}")
-    public ModelAndView deleteNote(@PathVariable Long id){
+    @PostMapping ("/delete")
+    public String deleteNote(@RequestParam  Long id){
         noteService.deleteById(id);
-        return new ModelAndView("redirect:/note/list");
+        return "redirect:/note/list";
 
     }
     @GetMapping("/edit/{id}")
