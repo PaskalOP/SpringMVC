@@ -4,7 +4,11 @@ import com.example.SpringMVC.Note.Note;
 import com.example.SpringMVC.Note.NoteService;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
 
 @Service
 public class InitClass {
@@ -18,27 +22,9 @@ public class InitClass {
     @PostConstruct
     public void init(){
         noteService.add(note2);
-        noteService.add(note3);
-        noteService.add(note4);
-        Long id = note3.getId();
-        noteService.changeNote(id,"День 3", "Все тоже самое");
-        //noteService.printAllNotes();
-        //noteService.printAllId();
 
-        //System.out.println(noteService.getNodeById(5L));
-        //System.out.println(noteService.getNodeById(id));
-        // noteService.deleteById(id);
-        // System.out.println("We delated note with id "+ id);
-        //note4.setId(id);
-        noteService.printAllNotes();
-       // noteService.printAllId();
-
-       // System.out.println(note4);
-       // noteService.update(note4);
-       // System.out.println("We update element  with id "+ id);
-        //noteService.printAllNotes();
-        noteService.printAllId();
     }
+
     @PreDestroy
     public void preDestroy(){
         System.out.println("I am dead");

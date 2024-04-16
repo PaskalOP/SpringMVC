@@ -11,66 +11,30 @@ import java.util.Random;
 @Service
 @Data
 public class NoteService {
-    private final List<Note> allNotes;
-    private final  List<Long> allNotesId;
+
+    private final NoteRepository noteRepository;
 
 
-    public void printAllNotes (){
-        allNotes.stream().forEach(p-> System.out.println(p));
-    }
-    public  void printAllId(){
-        for (Long id: allNotesId) {
-            System.out.println(id);
-        }
-    }
     public List<Note> listAll(){
-        return this.allNotes;
+        return noteRepository.findAll();
     }
     public Note add(Note note){
-        long id = generateID();
-        note.setId(id);
-        allNotes.add(note);
-        allNotesId.add(id);
+        noteRepository.save(note);
         return note;
     }
     public Note changeNote(Long id, String title, String content){
-        Note note = getNodeById(id);
+        Note note = noteRepository.getReferenceById(id);
         note.setContent(content);
         note.setTitle(title);
+        noteRepository.save(note);
         return note;
     }
-    private long generateID(){
-        Random random = new Random();
-        long newID = random.nextLong();
-        boolean isUnic = false;
-        while (!isUnic){
-            if(allNotesId.contains(newID))  newID = random.nextLong();
-            else isUnic =true;
-        }
-        return newID;
-    }
+
     public Note getNodeById(long id){
-        for (Note note:allNotes) {
-            if(note.getId()==id) return note;
-        }
-        throw new NullPointerException();
+        return noteRepository.getReferenceById(id);
     }
 
     public void deleteById(long id){
-        Note note = getNodeById(id);
-        allNotes.remove(note);
-        allNotesId.remove(note.getId());
-    }
-    public void update(Note note){
-        boolean haveElement =false;
-        for (Note item :allNotes) {
-            if(item.getId()==note.getId()) {
-                item.setTitle(note.getTitle());
-                item.setContent(note.getContent());
-                haveElement = true;
-            }
-        }
-        if(!haveElement)  throw new NullPointerException();
-
+        noteRepository.deleteById(id);
     }
 }

@@ -13,7 +13,7 @@ public class NoteController {
     @GetMapping("/list")
     public ModelAndView getAllNotes(){
         ModelAndView result = new ModelAndView("all-notes");
-        result.addObject("listNotes",noteService.getAllNotes());
+        result.addObject("listNotes",noteService.listAll());
         return result;
 
     }
