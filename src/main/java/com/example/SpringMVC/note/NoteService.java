@@ -1,12 +1,11 @@
-package com.example.SpringMVC.Note;
+package com.example.SpringMVC.note;
 
-import com.example.SpringMVC.Note.Note;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Random;
+
 @RequiredArgsConstructor
 @Service
 @Data

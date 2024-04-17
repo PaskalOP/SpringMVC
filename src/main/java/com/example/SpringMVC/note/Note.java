@@ -1,4 +1,4 @@
-package com.example.SpringMVC.Note;
+package com.example.SpringMVC.note;
 
 import jakarta.persistence.*;
 import lombok.Data;

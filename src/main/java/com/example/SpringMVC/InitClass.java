@@ -1,14 +1,10 @@
 package com.example.SpringMVC;
 
-import com.example.SpringMVC.Note.Note;
-import com.example.SpringMVC.Note.NoteService;
+import com.example.SpringMVC.note.Note;
+import com.example.SpringMVC.note.NoteService;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
 
 @Service
 public class InitClass {
@@ -21,7 +17,9 @@ public class InitClass {
     Note note4 = new Note("Day 3","I want ice-cream, but I am at diet");
     @PostConstruct
     public void init(){
-        noteService.add(note2);
+       // noteService.add(note2);
+       // System.out.println( noteService.getNodeById(note2.getId()));
+        System.out.println("Init");
 
     }
 
