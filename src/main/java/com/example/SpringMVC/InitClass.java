@@ -1,24 +1,22 @@
 package com.example.SpringMVC;
 
-import com.example.SpringMVC.note.Note;
-import com.example.SpringMVC.note.NoteService;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import org.springframework.stereotype.Service;
 
 @Service
 public class InitClass {
-    NoteService noteService;
-    public InitClass (NoteService noteService){
+    NotesService noteService;
+
+    public InitClass (NotesService noteService){
         this.noteService = noteService;
     }
-    Note note2 = new Note("Day 1","It was good day");
-    Note note3 = new Note("Day 2","The weather was rainy");
-    Note note4 = new Note("Day 3","I want ice-cream, but I am at diet");
+    NoteEntity note2 = new NoteEntity("Day 1","It was good day");
+    NoteEntity note3 = new NoteEntity("Day 2","The weather was rainy");
+    NoteEntity note4 = new NoteEntity("Day 3","I want ice-cream, but I am at diet");
     @PostConstruct
     public void init(){
-       // noteService.add(note2);
-       // System.out.println( noteService.getNodeById(note2.getId()));
+
         System.out.println("Init");
 
     }

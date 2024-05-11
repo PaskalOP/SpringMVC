@@ -1,15 +1,15 @@
-package com.example.SpringMVC.note;
+package com.example.SpringMVC;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/note")
-public class NoteController {
-    private final NoteService noteService;
+public class NotesController {
+    private final NotesService noteService;
     @GetMapping("/list")
     public ModelAndView getAllNotes(){
         ModelAndView result = new ModelAndView("all-notes");
@@ -42,7 +42,7 @@ public class NoteController {
 
     @PostMapping("/addNote")
     public String addNewNote(@RequestParam String title, @RequestParam String content){
-        Note newNote = new Note(title,content);
+        NoteEntity newNote = new NoteEntity(title,content);
         noteService.add(newNote);
         return "redirect:/note/list";
     }

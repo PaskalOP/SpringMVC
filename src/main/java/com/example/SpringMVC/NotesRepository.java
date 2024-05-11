@@ -1,8 +1,8 @@
-package com.example.SpringMVC.note;
+package com.example.SpringMVC;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-interface NoteRepository extends JpaRepository<Note,Long> {
+interface NotesRepository extends JpaRepository<NoteEntity,Long> {
 }

@@ -1,4 +1,4 @@
-package com.example.SpringMVC.note;
+package com.example.SpringMVC;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -9,27 +9,27 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 @Data
-public class NoteService {
+public class NotesService {
 
-    private final NoteRepository noteRepository;
+    private final NotesRepository noteRepository;
 
 
-    public List<Note> listAll(){
+    public List<NoteEntity> listAll(){
         return noteRepository.findAll();
     }
-    public Note add(Note note){
+    public NoteEntity add(NoteEntity note){
         noteRepository.save(note);
         return note;
     }
-    public Note changeNote(Long id, String title, String content){
-        Note note = noteRepository.getReferenceById(id);
+    public NoteEntity changeNote(Long id, String title, String content){
+        NoteEntity note = noteRepository.getReferenceById(id);
         note.setContent(content);
         note.setTitle(title);
         noteRepository.save(note);
         return note;
     }
 
-    public Note getNodeById(long id){
+    public NoteEntity getNodeById(long id){
         return noteRepository.getReferenceById(id);
     }
 
