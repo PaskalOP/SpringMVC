@@ -1,11 +1,13 @@
 package com.example.SpringMVC;
 
+import jakarta.annotation.security.RolesAllowed;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 @RequestMapping("/note")
 public class NotesController {
@@ -17,12 +19,14 @@ public class NotesController {
         return result;
 
     }
+
     @PostMapping ("/delete")
     public String deleteNote(@RequestParam  Long id){
         noteService.deleteById(id);
         return "redirect:/note/list";
 
     }
+
     @GetMapping("/edit/{id}")
     public ModelAndView getNoteForEdit(@PathVariable Long id){
         ModelAndView result = new ModelAndView("edit-note");

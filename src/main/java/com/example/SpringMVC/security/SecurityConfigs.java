@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -24,8 +25,8 @@ public class SecurityConfigs  {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
-                .usersByUsernameQuery("SELECT ID, name, password FROM users WHERE name=?")
-                .authoritiesByUsernameQuery("SELECT role FROM users WHERE name=?");
+                .usersByUsernameQuery("SELECT name, password, 1 as enabled FROM users WHERE name=?")
+                .authoritiesByUsernameQuery("SELECT name, role FROM users WHERE name=?");
     }
 
     @Bean
@@ -33,13 +34,13 @@ public class SecurityConfigs  {
         http
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/", "/note/list","/note/add","/note/addNote").permitAll()
-                        .requestMatchers("/note/delete/**").hasRole("ADMIN")
-                        .requestMatchers("/note/edit/**").hasAnyRole("ADMIN","USER")
+                        .requestMatchers("/note/delete/**").hasAuthority("ADMIN")
+                        .requestMatchers("/note/edit/**").hasAnyAuthority("ADMIN","USER")
                         .anyRequest().authenticated()
 
                 )
                 .formLogin(form -> form
-                        .defaultSuccessUrl("/default-success-url", true)
+                        .defaultSuccessUrl("/note/list", true)
                         .permitAll()
 
                 )
@@ -51,5 +52,11 @@ public class SecurityConfigs  {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+    @Bean
+    public WebSecurityCustomizer ignoreResources() {
+        return (webSecurity) -> webSecurity
+                .ignoring()
+                .requestMatchers(new AntPathRequestMatcher("/note/list"));
     }
 }
