@@ -1,5 +1,6 @@
 package com.example.SpringMVC.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -16,30 +17,29 @@ import javax.sql.DataSource;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfigs  {
+    @Autowired
     private DataSource dataSource;
 
-
-    private void configure(AuthenticationManagerBuilder auth)throws Exception{
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
-                .passwordEncoder(passwordEncoder())
-                .usersByUsernameQuery("SELECT name, password,role enabled FROM users WHERE name=?")
-                .authoritiesByUsernameQuery("SELECT name, role FROM users WHERE name=?");
-
+                .usersByUsernameQuery("SELECT ID, name, password FROM users WHERE name=?")
+                .authoritiesByUsernameQuery("SELECT role FROM users WHERE name=?");
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/", "/note/list","/note/add","/note/addNote","/login").permitAll()
+                        .requestMatchers("/", "/note/list","/note/add","/note/addNote").permitAll()
                         .requestMatchers("/note/delete/**").hasRole("ADMIN")
                         .requestMatchers("/note/edit/**").hasAnyRole("ADMIN","USER")
                         .anyRequest().authenticated()
 
                 )
                 .formLogin(form -> form
-                        .loginPage("/login")
+                        .defaultSuccessUrl("/default-success-url", true)
                         .permitAll()
 
                 )
