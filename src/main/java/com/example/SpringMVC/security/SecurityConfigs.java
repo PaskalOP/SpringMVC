@@ -53,10 +53,5 @@ public class SecurityConfigs  {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    @Bean
-    public WebSecurityCustomizer ignoreResources() {
-        return (webSecurity) -> webSecurity
-                .ignoring()
-                .requestMatchers(new AntPathRequestMatcher("/note/list"));
-    }
+
 }
