@@ -80,8 +80,11 @@ public class NotesController {
 //    }
 
     @PostMapping("/addNote")
-    public ResponseEntity<ResponseNoteDTO> addNewNote (@RequestBody NoteDTO noteDTO){
-       NoteEntity note = mapperNote.fromNoteDTO(noteDTO);
+    public ResponseEntity<ResponseNoteDTO> addNewNote (@RequestParam String title, @RequestParam String content){
+        NoteDTO noteDTO = new NoteDTO();
+        noteDTO.setTitle(title);
+        noteDTO.setContent(content);
+        NoteEntity note = mapperNote.fromNoteDTO(noteDTO);
         noteService.add(note);
         return ResponseEntity
                 .status(HttpStatus.OK)
